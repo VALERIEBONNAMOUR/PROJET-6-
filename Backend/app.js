@@ -26,31 +26,3 @@ app.use('/api/works', worksRoutes);
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocs))
 module.exports = app;
 
-const apiUrl = 'http://localhost:5678/api/works';
-
-function fetchProjects() {
-    fetch(apiUrl)
-        .then(response => {
-            console.log(response)
-            return response.json();
-        })
-        .then(projects => {
-            const gallery = document.getElementById('project-gallery');
-
-            gallery.innerHTML = '';
-
-            projects.forEach(project => {
-                const figure = document.createElement('figure');
-                const img = document.createElement('img');
-                img.src = `./images/${project.image}`;
-                img.alt = project.title;
-                const figcaption = document.createElement('figcaption');
-                figcaption.textContent = project.title;
-
-                figure.appendChild(img);
-                figure.appendChild(figcaption);
-                gallery.appendChild(figure);
-            });
-        })
-}
-document.addEventListener('DOMContentLoaded', fetchProjects);
