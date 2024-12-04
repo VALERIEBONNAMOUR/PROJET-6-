@@ -144,27 +144,15 @@ nav li a:hover {
 .filtre-link{
 	text-decoration: none;
 	padding: 10px;
+	border: 2px solid rgba(29, 97, 84, 1);
     border-radius: 60px;
-    background: rgba(29, 97, 84, 1);
+    background: white;
+	color: rgba(29, 97, 84, 1);
+}
+
+.selected{
+	background: rgba(29, 97, 84, 1);
 	color: white;
-}
-
-a#objets.filtre-link{
-	color: rgba(29, 97, 84, 1);
-    border: 1px solid rgba(29, 97, 84, 1);
-    background-color: white;
-}
-
-a#appartements.filtre-link{
-	color: rgba(29, 97, 84, 1);
-    border: 1px solid rgba(29, 97, 84, 1);
-    background-color: white;
-}
-
-a#hotels-restaurants.filtre-link{
-	color: rgba(29, 97, 84, 1);
-    border: 1px solid rgba(29, 97, 84, 1);
-    background-color: white;
 }
 
 

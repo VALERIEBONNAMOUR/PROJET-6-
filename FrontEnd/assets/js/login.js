@@ -32,30 +32,3 @@ loginForm.addEventListener('submit', async (event) => {
     }
 });
 
-// Utilisation du token dans les requêtes suivantes
-
-const token = localStorage.getItem('token');
-const protectedUrl = 'http://localhost:5678/api/users/login'; 
-
-async function fetchProtectedData() {
-    try {
-        const response = await fetch(protectedUrl, {
-            method: 'POST', 
-            headers: {
-                'Content-Type': 'application/json',
-                'Authorization': `Bearer ${token}`,  
-            },
-        });
-
-        if (response.ok) {
-            const data = await response.json();
-            console.log(data); 
-        } else {
-            throw new Error("Accès non autorisé ou token invalide");
-        }
-    } catch (error) {
-        console.error("Erreur lors de la requête protégée:", error);
-    }
-}
-
-fetchProtectedData();
