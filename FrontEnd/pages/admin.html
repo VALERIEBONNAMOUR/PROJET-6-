@@ -10,7 +10,8 @@
     <link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=Work+Sans&display=swap"
         rel="stylesheet">
     <meta name="description" content="">
-    <link rel="stylesheet" href="./assets.style.css">
+    <link rel="stylesheet" href="../assets/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css">
 </head>
 
 <body>
@@ -20,15 +21,15 @@
             <ul>
                 <li><a href="#">projets</a></li>
                 <li><a href="#contact">contact</a></li>
-                <li><a href="./pages/login.html">login</a></li>
-                <li><a href="https://instagram.fr"><img src="./assets/icons/instagram.png" alt="Instagram"></a></li>
+                <li><a href="./login.html">login</a></li>
+                <li><a href="https://instagram.fr"><img src="../assets/icons/instagram.png" alt="Instagram"></a></li>
             </ul>
         </nav>
     </header>
     <main>
         <section id="introduction">
             <figure>
-                <img src="./assets/images/sophie-bluel.png" alt="">
+                <img src="../assets/images/sophie-bluel.png" alt="portrait Sophie Bluel">
             </figure>
             <article>
                 <h2>Designer d'espace</h2>
@@ -42,13 +43,16 @@
             </article>
         </section>
         <section id="portfolio">
-            <h2>Mes Projets</h2>
-            <article>
+            <div id="edit-button">
+            <h2>Mes Projets</h2> 
                 <i class="fa-regular fa-pen-to-square"></i>
-                <a href="../index.html">Modifier</a>
-            </article>
+                <a href="../index.html">modifier</a>
+            </div>
+            <!-- <a href="#modal1">Galerie photo</a>
+            <aside id="modal1" class="modal"> -->
             <div id="project-gallery" class="gallery">
             </div>
+            <!-- </aside> -->
         </section>
 
         <section id="contact">
@@ -74,7 +78,7 @@
         </nav>
     </footer>
 
-    <script src="./assets/js/main.js"></script>
+    <script src="../assets/js/main.js"></script>
 
 </body>
 

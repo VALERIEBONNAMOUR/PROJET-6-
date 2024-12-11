@@ -227,6 +227,31 @@ label#mdpo{
     margin-bottom: 200px;
 }
 
+/* création du bouton modifier */
+#edit-button {
+    display: flex; 
+    align-items: baseline;
+	justify-content: center;
+    gap: 10px; 
+}
+a{
+    color: black;
+    text-decoration: initial;
+}
+
+#edit-button i {
+    font-size: 14px; 
+	margin-left: 15px;
+}
+
+/* création de la modale */
+
+/* .modal{
+	width: 500px;
+	padding: 20px;
+	background-color: white;
+} */
+
 
 
 
