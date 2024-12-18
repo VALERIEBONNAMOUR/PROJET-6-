@@ -44,15 +44,12 @@
         </section>
         <section id="portfolio">
             <div id="edit-button">
-            <h2>Mes Projets</h2> 
+                <h2>Mes Projets</h2>
                 <i class="fa-regular fa-pen-to-square"></i>
-                <a href="../index.html">modifier</a>
+                <p>modifier</p>
             </div>
-            <!-- <a href="#modal1">Galerie photo</a>
-            <aside id="modal1" class="modal"> -->
             <div id="project-gallery" class="gallery">
             </div>
-            <!-- </aside> -->
         </section>
 
         <section id="contact">
@@ -69,6 +66,17 @@
             </form>
         </section>
     </main>
+    <aside id="modal1" class="modal" aria-hidden="true">
+        <div class="modal-container">
+            <h3 class="title-modal1">Galerie photo</h3>
+            <i class="fa-solid fa-xmark" id="modal-icon"></i>
+            <div id="modal-project-gallery" class="gallery">
+            </div>
+            <form action="#" method="post">
+                <input type="submit" value="Ajouter une photo" id="modal1-btn">
+            </form>
+        </div>
+    </aside>
 
     <footer>
         <nav>

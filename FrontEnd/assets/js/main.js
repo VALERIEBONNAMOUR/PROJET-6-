@@ -1,5 +1,7 @@
 const apiUrl = 'http://localhost:5678/api/works';
 const gallery = document.getElementById('project-gallery');
+const openModal = document.getElementById('modal');
+
 
 async function fetchProjects() {
     const response = await fetch(apiUrl)
@@ -11,6 +13,7 @@ async function displayProjects(projects = null) {
     if (projects == null) {
         projects = await fetchProjects()
     }
+ 
 
     gallery.innerHTML = '';
     projects.forEach(project => {
@@ -23,6 +26,7 @@ async function displayProjects(projects = null) {
         figure.appendChild(img);
         figure.appendChild(figcaption);
         gallery.appendChild(figure);
+        
     });
 
 }
@@ -94,7 +98,22 @@ function filterByCategory(categoryId, projects) {
 
 function init() {
     createFilters();
-    displayProjects()
+    displayProjects();
+}
+
+
+function openModal() {
+    modal.style.display = 'block'; 
+    modal.setAttribute('aria-hidden', 'false');
+    fetchProjects().then(projects => {
+        displayProjects(projects); 
+    });
+}
+
+
+function closeModal() {
+    modal.style.display = 'none';
+    modal.setAttribute('aria-hidden', 'true');
 }
 
 
