@@ -18,8 +18,7 @@ loginForm.addEventListener('submit', async (event) => {
         if (response.ok) {
             const data = await response.json(); 
             localStorage.setItem('token', data.token);
-            // redirection vers la page admin
-            window.location.href = '/admin'; 
+            window.location.href = './admin.html'; 
 
         }else{
             throw new Error("Mauvais identifiants");
