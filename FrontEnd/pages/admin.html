@@ -44,12 +44,12 @@
         </section>
         <section id="portfolio">
             <div class="title-portfolio">
-            <h2>Mes Projets</h2>
-            <div id="edit-button">
-                <i class="fa-regular fa-pen-to-square"></i>
-                <p>modifier</p>
+                <h2>Mes Projets</h2>
+                <div id="edit-button">
+                    <i class="fa-regular fa-pen-to-square"></i>
+                    <p>modifier</p>
+                </div>
             </div>
-        </div>
             <div id="project-gallery" class="gallery">
             </div>
         </section>
@@ -72,15 +72,56 @@
         <div class="modal-container">
             <h3 class="title-modal1">Galerie photo</h3>
             <i class="fa-solid fa-xmark modal-icon" id="modal-delete-icon"></i>
-           
+
             <div id="modal-project-gallery" class="gallery">
             </div>
             <div class="line-btn">
-            <div class="line1"></div>
-            <form action="#" method="post">
-                <input type="submit" value="Ajouter une photo" id="modal1-btn">
-            </form>
+                <div class="line1"></div>
+                <form action="#" method="post">
+                    <input type="button" value="Ajouter une photo" id="modal1-btn">
+                </form>
+            </div>
         </div>
+    </div>
+
+    <div id="modal2" class="modal hidden" aria-hidden="true">
+        <div class="modal-container">
+            <h3 class="title-modal1">Ajout photo</h3>
+            <i class="fa-solid fa-arrow-left"></i>
+            <i class="fa-solid fa-xmark modal-icon" id="modal-delete-icon"></i>
+            <div class="rectangle-container">
+                <div class="rectangle">
+                    <i class="fa-regular fa-image"></i>
+                    <form>
+                        <label for="photo" class="button">+ Ajouter photo</label>
+                        <input type="file" id="photo" name="photo" accept="image/*" style="display: none;">
+                    </form>
+                    <p class="text-modal2">jpn.png : 4mo max</p>
+                </div>
+            </div>
+            <div>
+                <h3>Titre</h3>
+            </div>
+            <div class="container-title-rectangle">
+                <form action="modal2.html" method="get">
+                    <textarea name="text" id="title-rectangle"></textarea>
+                </form>
+            </div>
+            <div>
+                <h3>Catégorie</h3>
+            </div>
+            <div class="container-title-rectangle" id="form-modal2">
+                <form action="modal2.html" method="get">
+                    <label for="choix"></label>
+                    <select name="choix" id="title-rectangle">
+                    </select>
+                </form>
+            </div>
+            <div class="line-btn">
+                <div class="line1"></div>
+                <input type="button" value="Valider" id="modal2-btn">
+
+            </div>
         </div>
     </div>
     <footer>

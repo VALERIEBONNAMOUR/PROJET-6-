@@ -4,43 +4,80 @@ const modalDelete = document.getElementById('modal1');
 const modalGallery = document.querySelector('#modal-project-gallery');
 let works = []
 const filtreContainer = document.getElementById('filtre-container');
+const modalAdd = document.querySelector('#modal2')
+const form = document.getElementById('form-modal2')
+const submitter = document.querySelector("input[value=submit]")
+
+
+form.addEventListener("submit",function(event){
+    event.preventDefault();
+    const formData = new FormData(form, submitter);
+    newImage(formData, updateGallery);
+})
+
+async function newImage(formData, element) {
+    try {
+        const response = await fetch(`http://localhost:5678/api/works/${imageId}`, {
+            method: 'POST',
+            body: formData,
+        });
+
+        if (response.ok) {
+            element()
+        } else {
+            console.error('Erreur lors de l\'ajout de l\'image');
+            console.log(response)
+        }
+    } catch (error) {
+        console.error('Erreur de réseau:', error);
+    }
+}
+
+
+document.querySelector('#modal1-btn').addEventListener('click', () => {
+    closeModal(modalDelete)
+    openModal(modalAdd)
+})
+
+modalDelete.addEventListener('click', (e) => {
+    console.log(e.target.getAttribute('id'));
+
+    if (e.target.getAttribute('id') === 'modal1') {
+        closeModal(modalDelete)
+    }
+})
 
 async function fetchProjects() {
     const response = await fetch(apiUrl)
     const data = await response.json()
-    works= data
+    works = data
     return data
 }
-if (document.querySelector('#logout')){
-    document.querySelector('#logout').addEventListener('click', ()=>{
-        localStorage.removeItem('token')
-        window.location.href="./login.html"
-    })
-}
+
 
 async function displayProjetModal() {
     modalGallery.innerHTML = '';
-    
-  works.forEach (work=>{
-    const div= document.createElement('div')
-    div.classList.add("work-container")
-    modalGallery.appendChild(div)
-    const icone= document.createElement ('i')
-    icone.classList.add("fa-solid","fa-trash-can")
-    icone.addEventListener('click',()=>{
-        deleteImage(work.id,div)
+
+    works.forEach(work => {
+        const div = document.createElement('div')
+        div.classList.add("work-container")
+        modalGallery.appendChild(div)
+        const icone = document.createElement('i')
+        icone.classList.add("fa-solid", "fa-trash-can")
+        icone.addEventListener('click', () => {
+            deleteImage(work.id, div)
+        })
+        div.appendChild(icone)
+        const image = document.createElement('img')
+        image.src = work.imageUrl
+        div.appendChild(image)
     })
-    div.appendChild(icone)
-    const image= document.createElement('img')
-    image.src= work.imageUrl
-    div.appendChild(image)
-  }) 
 }
 async function displayProjects(projects = null) {
     if (projects == null) {
         projects = await fetchProjects()
     }
- 
+
 
     gallery.innerHTML = '';
     projects.forEach(project => {
@@ -53,7 +90,7 @@ async function displayProjects(projects = null) {
         figure.appendChild(img);
         figure.appendChild(figcaption);
         gallery.appendChild(figure);
-        
+
     });
 
 }
@@ -76,7 +113,7 @@ async function createFilters() {
     try {
         const projects = await fetchProjects()
         const categories = await getCategories()
-        
+
         const divall = document.createElement("div")
         divall.classList.add('espacefiltre');
         const btn = document.createElement("a");
@@ -124,10 +161,16 @@ function filterByCategory(categoryId, projects) {
 }
 
 async function init() {
-    if (filtreContainer) {
-        await createFilters(); 
+    if (document.querySelector('#logout')) {
+        document.querySelector('#logout').addEventListener('click', () => {
+            localStorage.removeItem('token')
+            window.location.href = "./login.html"
+        })
     }
-   
+    if (filtreContainer) {
+        await createFilters();
+    }
+
     await displayProjects();
     if (modalGallery) {
         await displayProjetModal()
@@ -140,21 +183,21 @@ function openModal(modal) {
     modal.classList.remove('hidden')
     modal.setAttribute('aria-hidden', 'false');
     fetchProjects().then(projects => {
-        displayProjects(projects); 
+        displayProjects(projects);
     });
 }
 
-if (document.querySelector("#edit-button")){
-    document.querySelector("#edit-button").addEventListener("click", ()=>{
+if (document.querySelector("#edit-button")) {
+    document.querySelector("#edit-button").addEventListener("click", () => {
         openModal(modalDelete)
     })
 }
 
 
-if (document.querySelector("#modal-delete-icon")){
-document.querySelector('#modal-delete-icon').addEventListener("click",()=>{
-    closeModal(modalDelete)
-})
+if (document.querySelector("#modal-delete-icon")) {
+    document.querySelector('#modal-delete-icon').addEventListener("click", () => {
+        closeModal(modalDelete)
+    })
 }
 
 function closeModal(modal) {
@@ -172,7 +215,7 @@ async function deleteImage(imageId, element) {
         });
 
         if (response.ok) {
-         element.remove()
+            element.remove()
         } else {
             console.error('Erreur lors de la suppression de l\'image');
             console.log(response)
@@ -184,7 +227,7 @@ async function deleteImage(imageId, element) {
 
 async function init() {
     if (filtreContainer) {
-        await createFilters(); 
+        await createFilters();
     }
     await displayProjects();
     if (modalGallery) {
