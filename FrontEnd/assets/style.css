@@ -236,6 +236,7 @@ label#mdpo{
     align-items: baseline;
 	justify-content: center;
     gap: 10px; 
+	margin-bottom: 20px;
 }
 a{
     color: black;
@@ -269,7 +270,7 @@ a{
 }
 
 .hidden{
-	display: none;
+	display: none !important;
 }
 
 .title-modal1{
@@ -293,6 +294,10 @@ input#modal1-btn{
 	font-size: 10px;
 	width: 150px;
 	margin-top: -15px;
+	color: WHITE;
+    border-radius: 20px;
+    border:none;
+    background-color: #1D6154;
 }
 
 .title-portfolio{
@@ -340,14 +345,13 @@ div#modal-project-gallery.gallery{
 	align-items: center;
     flex-direction: column;
 	height: 130px;
+	margin: 25px;
 }
 
 /* création de la modale 2 */
 
 i.fa-solid.fa-arrow-left{
-	display: flex;
-	justify-content:flex-start;
-	margin-top: -10px;
+	margin-top: -130px;
 	margin-left: 20px;
 }
 
@@ -357,7 +361,7 @@ i.fa-solid.fa-arrow-left{
 }
 .rectangle{
 	width: 300px;
-	height: 169px;
+	height: 150px;
 	background: rgba(232, 241, 246, 1);
 	display: flex;
 	flex-direction: column;
@@ -373,21 +377,24 @@ i.fa-regular.fa-image{
 label.button{
 	font-weight: 700;
 	background: rgba(203, 214, 220, 1);
-	margin : 2em auto ;
-	width: 173px!important;
-	height: 36px;
+	width: 160px;
+	height: 30px;
 	text-align: center;
 	border-radius: 60px ;
 	color: rgba(48, 102, 133, 1);
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	}
 
-}
 
 form{
 	margin-top: 10px;
 }
 
 p.text-modal2{
-	margin-top: 10px;
+	margin: 5px;
+	font-size: x-small;
 }
 
 #title-rectangle{
@@ -406,6 +413,7 @@ h3{
 	margin-left: 35px;
     margin-top: 20px;
 	font-weight:500;
+	margin-bottom: 5px;
 }
 
 textarea#title-rectangle{
@@ -426,7 +434,50 @@ input#modal2-btn{
 	text-align: center;
 	border-radius: 60px ;
 	height: 30px;
+	border: none;
 }
+
+div.modal2-title{
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	margin-top: 20px;
+}
+
+.title-modal1{
+	margin-bottom: -20px !important;
+}
+
+input#title-rectangle{
+	border: none;
+    box-shadow: 0px 4px 14px 0px rgba(0, 0, 0, 0.09);
+}
+
+select#categoriesSelect{
+	width: 300px;
+    height: 40px;
+    border: none;
+    box-shadow: 0px 4px 14px 0px rgba(0, 0, 0, 0.09);
+}
+
+.line-btn2{
+	display: flex;
+	align-items: center;
+    flex-direction: column;
+	margin-bottom: 25px;
+}
+
+.rectangle .container-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+	display: flex;
+    justify-content: center;
+}
+
+
+
+
 
 
 

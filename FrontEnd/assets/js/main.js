@@ -7,23 +7,59 @@ const filtreContainer = document.getElementById('filtre-container');
 const modalAdd = document.querySelector('#modal2')
 const form = document.getElementById('form-modal2')
 const submitter = document.querySelector("input[value=submit]")
+const inputFile = document.getElementById("photo");
+const buttonLabel = document.querySelector(".button");
+const containerImg = document.getElementById("container-img");
+const textModal2 = document.querySelector(".text-modal2");
+// const closeModal2 = document.getElementById('modal-delete-icon');
+
+
+inputFile.addEventListener("change", function(event) {
+    const file = event.target.files[0]; 
+
+    if (file) {
+        const imgURL = URL.createObjectURL(file);
+        const imgElement = document.createElement("img");
+        imgElement.src = imgURL;
+
+        buttonLabel.classList.remove("button");
+        buttonLabel.textContent = ""; 
+        
+        containerImg.innerHTML = ''; 
+        containerImg.appendChild(imgElement);
+
+        textModal2.style.display = 'none';
+    }
+});
 
 
 form.addEventListener("submit",function(event){
     event.preventDefault();
-    const formData = new FormData(form, submitter);
-    newImage(formData, updateGallery);
+    newImage();
 })
 
-async function newImage(formData, element) {
+async function newImage() {
     try {
-        const response = await fetch(`http://localhost:5678/api/works/${imageId}`, {
+        const title = document.querySelector('#title-rectangle').value
+        const img = document.querySelector('#photo').files[0]
+        const category = document.querySelector('#categoriesSelect').value
+        const formData = new FormData()
+        formData.append('title', title)
+        formData.append('image', img)
+        formData.append('category', category)
+        const response = await fetch(`http://localhost:5678/api/works`, {
             method: 'POST',
+            headers: {
+                Authorization: `Bearer ${localStorage.getItem('token')}`
+            
+            },
             body: formData,
         });
 
         if (response.ok) {
-            element()
+            await displayProjects();
+            await displayProjetModal()
+            closeModal(modalAdd)
         } else {
             console.error('Erreur lors de l\'ajout de l\'image');
             console.log(response)
@@ -37,6 +73,17 @@ async function newImage(formData, element) {
 document.querySelector('#modal1-btn').addEventListener('click', () => {
     closeModal(modalDelete)
     openModal(modalAdd)
+})
+
+document.querySelector('#photo').addEventListener('change', (e) => {
+    document.querySelector('#label-img').classList.add('hidden')
+    const img = document.querySelector('#photo').files[0]
+    const imgURL = URL.createObjectURL(img);
+    const imgel = document.createElement('img')
+    imgel.src = imgURL
+    document.querySelector('#container-img').appendChild(imgel)
+    
+
 })
 
 modalDelete.addEventListener('click', (e) => {
@@ -177,7 +224,6 @@ async function init() {
     }
 }
 
-
 function openModal(modal) {
     console.log("openModal")
     modal.classList.remove('hidden')
@@ -204,6 +250,7 @@ function closeModal(modal) {
     modal.style.display = 'none';
     modal.setAttribute('aria-hidden', 'true');
 }
+
 
 async function deleteImage(imageId, element) {
     try {
@@ -232,6 +279,18 @@ async function init() {
     await displayProjects();
     if (modalGallery) {
         await displayProjetModal();
+    }
+    if (form) {
+        const category = await getCategories();
+        category.forEach(cat => {
+            console.log( document.querySelector('#categoriesSelect'));
+            
+            const option = document.createElement('option');
+            option.value = cat.id;
+            option.textContent = cat.name;
+            document.querySelector('#categoriesSelect').appendChild(option);
+        });
+        
     }
 }
 
