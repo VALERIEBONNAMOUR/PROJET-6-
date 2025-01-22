@@ -214,6 +214,22 @@ if (document.querySelector("#modal-delete-icon")) {
 function closeModal(modal) {
     modal.classList.add('hidden')
     modal.setAttribute('aria-hidden', 'true');
+   
+    
+      
+
+        // buttonLabel.classList.remove("button");
+        
+
+        containerImg.innerHTML = ' <i class="fa-regular fa-image" id="label-img"></i>';
+        if (!buttonLabel.classList.contains("button")) {
+            buttonLabel.classList.add("button");
+            buttonLabel.textContent="+ Ajouter photo";
+        }
+
+        document.querySelector("#title-rectangle").value='';
+        textModal2.style.display = 'block';
+    
 }
 
 // La fonction deleteImage(imageId, element) permet de supprimer une image
@@ -260,6 +276,27 @@ async function init() {
     }
     // Gestion du formulaire d'ajout d'image
     if (form) {
+        form.addEventListener('input', function () {
+            const inputs = form.querySelectorAll('input');
+            const submitButton = document.getElementById('modal2-btn');
+            let isValide = true;
+          
+            // Vérifier si tous les inputs sont remplis
+            inputs.forEach(function(input) {
+                console.log(input);
+              if (input.value.trim() === '') {
+                isValide = false;
+              }
+            });
+          
+            // Activer ou désactiver le bouton en fonction de la vérification
+            
+            if (isValide){
+                submitButton.disabled = false;
+                submitButton.classList.add("active");
+            }
+            
+          });
         const category = await getCategories();
         category.forEach(cat => {
             console.log(document.querySelector('#categoriesSelect'));
@@ -317,4 +354,4 @@ async function init() {
 }
 
 
-document.addEventListener('DOMContentLoaded', init());
+document.addEventListener('DOMContentLoaded', init);
