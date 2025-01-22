@@ -1,4 +1,4 @@
-const apiUrl = 'http://localhost:5678/api/works';
+const apiUrl = 'http://localhost:5678/api/';
 const gallery = document.getElementById('project-gallery');
 const modalDelete = document.getElementById('modal1');
 const modalGallery = document.querySelector('#modal-project-gallery');
@@ -11,32 +11,19 @@ const inputFile = document.getElementById("photo");
 const buttonLabel = document.querySelector(".button");
 const containerImg = document.getElementById("container-img");
 const textModal2 = document.querySelector(".text-modal2");
-// const closeModal2 = document.getElementById('modal-delete-icon');
+const btnModalOne = document.querySelector('#modal1-btn')
+const closeModalOne = document.getElementById('modal-delete-icon');
+const closeModalTwo = document.getElementById('modal-add-icon');
+const rewind = document.querySelector('#rewind');
 
 
-inputFile.addEventListener("change", function(event) {
-    const file = event.target.files[0]; 
 
-    if (file) {
-        const imgURL = URL.createObjectURL(file);
-        const imgElement = document.createElement("img");
-        imgElement.src = imgURL;
-
-        buttonLabel.classList.remove("button");
-        buttonLabel.textContent = ""; 
-        
-        containerImg.innerHTML = ''; 
-        containerImg.appendChild(imgElement);
-
-        textModal2.style.display = 'none';
-    }
-});
-
-
-form.addEventListener("submit",function(event){
-    event.preventDefault();
-    newImage();
-})
+// les blocs try et catch permettent de gérer les erreurs qui peuvent survenir. 
+// La fonction newImage permet d'envoyer une requête HTTP POST à une API afin d'ajouter une nouvelle image dans la gestion de projets.
+// La fonction async permet d'utiliser l'opération await (permet d'attendre que  que certaines promesses soient résolues avant de continuer l'exécution du code.)
+// Un objet FormData est créé, ce qui permet d'envoyer des données (title, img, category) dans une requête HTTP.
+// fetch est utilisé pour envoyer une requête HTTP asynchrone à l'API.
+// Le header Authorization est configuré pour envoyer un jeton JWT stocké dans le localStorage sous la clé 'token' pour authentifier l'utilisateur.
 
 async function newImage() {
     try {
@@ -47,11 +34,10 @@ async function newImage() {
         formData.append('title', title)
         formData.append('image', img)
         formData.append('category', category)
-        const response = await fetch(`http://localhost:5678/api/works`, {
+        const response = await fetch(apiUrl + "works", {
             method: 'POST',
             headers: {
                 Authorization: `Bearer ${localStorage.getItem('token')}`
-            
             },
             body: formData,
         });
@@ -69,38 +55,20 @@ async function newImage() {
     }
 }
 
-
-document.querySelector('#modal1-btn').addEventListener('click', () => {
-    closeModal(modalDelete)
-    openModal(modalAdd)
-})
-
-document.querySelector('#photo').addEventListener('change', (e) => {
-    document.querySelector('#label-img').classList.add('hidden')
-    const img = document.querySelector('#photo').files[0]
-    const imgURL = URL.createObjectURL(img);
-    const imgel = document.createElement('img')
-    imgel.src = imgURL
-    document.querySelector('#container-img').appendChild(imgel)
-    
-
-})
-
-modalDelete.addEventListener('click', (e) => {
-    console.log(e.target.getAttribute('id'));
-
-    if (e.target.getAttribute('id') === 'modal1') {
-        closeModal(modalDelete)
-    }
-})
+// la fonction fetchProjects permet d'envoyer une requête HTTP vers l'URL de l'API.
+// response.json() permet de traiter la réponse de l'API qui est en JSON et de la convertir en un objet JavaScript.
+// les données JSON sont stockées dans la variable works.
 
 async function fetchProjects() {
-    const response = await fetch(apiUrl)
+    const response = await fetch(apiUrl + "works")
     const data = await response.json()
     works = data
     return data
 }
 
+// la fonction displayProjectModal s'occupe de l'affichage des projets dans une modale.
+// forEach (parcours chaque projet dans le tableau works)
+// création d'une icone corbeille pour supprimer les images
 
 async function displayProjetModal() {
     modalGallery.innerHTML = '';
@@ -120,6 +88,9 @@ async function displayProjetModal() {
         div.appendChild(image)
     })
 }
+
+// la fonction displayProjects affiche les projets dans la galerie principale (pour chaque projet elle va créer un élément figure qui contiendra une image et une légende)
+
 async function displayProjects(projects = null) {
     if (projects == null) {
         projects = await fetchProjects()
@@ -142,25 +113,32 @@ async function displayProjects(projects = null) {
 
 }
 
+// la fonction getCategories tente de récupérer une liste de catégories depuis l'API.
+// Elle envoie une requête HTTP GET pour récupérer les catégories, Si la requête réussit, 
+// elle récupère les données JSON de la réponse et les renvoie.
+// Si la requête échoue ou si un autre problème se produit, elle renvoie l'erreur pour pouvoir la traiter.
 
 async function getCategories() {
     try {
-        const response = await fetch('http://localhost:5678/api/categories');
+        const response = await fetch(apiUrl + 'categories');
         if (response.ok) {
             const categories = await response.json();
             return categories
         }
-        throw new Error("erreur dans lee fetch")
+        throw new Error("erreur dans le fetch")
     } catch (erreur) {
         return erreur
     }
 }
 
+// la fonction createFilters a pour but de créer et afficher des filtres interactifs 
+// pour filtrer des projets par catégorie. 
+
 async function createFilters() {
     try {
         const projects = await fetchProjects()
         const categories = await getCategories()
-
+// création du filtre tous
         const divall = document.createElement("div")
         divall.classList.add('espacefiltre');
         const btn = document.createElement("a");
@@ -171,10 +149,10 @@ async function createFilters() {
         btn.addEventListener("click", () => { filterByCategory("tous", projects) })
         divall.appendChild(btn);
         filtreContainer.appendChild(divall);
+// création des filtres pour chaques catégories
         categories.forEach(category => {
             const div = document.createElement('div');
             div.classList.add('espacefiltre');
-
             const a = document.createElement('a');
             a.href = `#${category.id}`;
             a.classList.add('filtre-link');
@@ -199,31 +177,17 @@ async function createFilters() {
     }
 }
 
-
+// la fonction filterByCategory permet de filtrer les projets par catégorie
 function filterByCategory(categoryId, projects) {
     if (categoryId === "tous") {
         return projects;
     }
+// projects.filter(...) est utilisé pour créer un nouveau tableau contenant 
+// uniquement les projets qui ont une categoryId
     displayProjects(projects.filter(item => item.categoryId === categoryId));
 }
 
-async function init() {
-    if (document.querySelector('#logout')) {
-        document.querySelector('#logout').addEventListener('click', () => {
-            localStorage.removeItem('token')
-            window.location.href = "./login.html"
-        })
-    }
-    if (filtreContainer) {
-        await createFilters();
-    }
-
-    await displayProjects();
-    if (modalGallery) {
-        await displayProjetModal()
-    }
-}
-
+// la fonction openModal permet d'afficher la modale et affiche la liste des projets
 function openModal(modal) {
     console.log("openModal")
     modal.classList.remove('hidden')
@@ -232,26 +196,28 @@ function openModal(modal) {
         displayProjects(projects);
     });
 }
-
+// ouverture de la modale lorsque le bouton est cliqué
 if (document.querySelector("#edit-button")) {
     document.querySelector("#edit-button").addEventListener("click", () => {
         openModal(modalDelete)
     })
 }
 
-
+// fermeture de la modale via la croix
 if (document.querySelector("#modal-delete-icon")) {
     document.querySelector('#modal-delete-icon').addEventListener("click", () => {
         closeModal(modalDelete)
     })
 }
 
+// la fonction closeModal(modal) sert à fermer la modale en la cachant visuellement 
 function closeModal(modal) {
-    modal.style.display = 'none';
+    modal.classList.add('hidden')
     modal.setAttribute('aria-hidden', 'true');
 }
 
-
+// La fonction deleteImage(imageId, element) permet de supprimer une image
+// depuis un serveur via une requête HTTP DELETE.
 async function deleteImage(imageId, element) {
     try {
         const response = await fetch(`http://localhost:5678/api/works/${imageId}`, {
@@ -272,25 +238,81 @@ async function deleteImage(imageId, element) {
     }
 }
 
+// la fonction init() initialise diverses actions (gérer des images, avec des modales, 
+// des filtres, des événements sur des formulaires)
 async function init() {
+    // Vérification et gestion du bouton de déconnexion (#logout)
+    // Suppression du token et redirection de l'utilisateur vers la page de connexion
+    if (document.querySelector('#logout')) {
+        document.querySelector('#logout').addEventListener('click', () => {
+            localStorage.removeItem('token')
+            window.location.href = "./login.html"
+        })
+    }
+    // Création des filtres
     if (filtreContainer) {
         await createFilters();
     }
+    // affichage des projets dans la modale
     await displayProjects();
     if (modalGallery) {
         await displayProjetModal();
     }
+    // Gestion du formulaire d'ajout d'image
     if (form) {
         const category = await getCategories();
         category.forEach(cat => {
-            console.log( document.querySelector('#categoriesSelect'));
-            
+            console.log(document.querySelector('#categoriesSelect'));
+
             const option = document.createElement('option');
             option.value = cat.id;
             option.textContent = cat.name;
             document.querySelector('#categoriesSelect').appendChild(option);
         });
-        
+
+        form.addEventListener("submit", function (event) {
+            event.preventDefault();
+            newImage();
+        })
+    }
+    // Gestion du changement de fichier d'image dans la modale 2
+    if (inputFile) {
+        inputFile.addEventListener("change", function (event) {
+            const file = event.target.files[0];
+            if (file) {
+                const imgURL = URL.createObjectURL(file);
+                const imgElement = document.createElement("img");
+                imgElement.src = imgURL;
+
+                buttonLabel.classList.remove("button");
+                buttonLabel.textContent = "";
+
+                containerImg.innerHTML = '';
+                containerImg.appendChild(imgElement);
+
+                textModal2.style.display = 'none';
+            }
+        });
+    }
+    // Gestion des modales de suppression et d'ajout 
+    if (btnModalOne) {
+        btnModalOne.addEventListener('click', () => {
+            closeModal(modalDelete)
+            openModal(modalAdd)
+        })
+    }
+    
+    if (modalDelete && modalAdd) {
+        closeModalOne.addEventListener('click', (e) => {
+         closeModal(modalDelete)
+        })
+        closeModalTwo.addEventListener('click', (e) => {
+            closeModal(modalAdd)
+        })
+        rewind.addEventListener('click', (e) => {
+            closeModal(modalAdd)
+            openModal(modalDelete)
+        })
     }
 }
 
