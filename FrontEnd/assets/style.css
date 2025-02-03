@@ -337,6 +337,10 @@ label#mdpo {
 	margin-bottom: 200px;
 }
 
+#error{
+	color: red;
+}
+
 /* création du bouton modifier */
 #edit-button {
 	display: flex;

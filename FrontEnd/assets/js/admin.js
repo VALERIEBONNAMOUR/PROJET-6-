@@ -174,9 +174,7 @@ async function deleteImage(imageId, element) {
 }
 
 async function initModal() {
-    if (localStorage.getItem('token') == "") {
-        window.location.href ="../index.html"
-    }
+   
     // Vérification et gestion du bouton de déconnexion (#logout)
     // Suppression du token et redirection de l'utilisateur vers la page de connexion
     document.querySelector('#logout').addEventListener('click', () => {
