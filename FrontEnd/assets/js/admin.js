@@ -14,6 +14,7 @@ const closeModalTwo = document.getElementById('modal-add-icon');
 
 
 // les blocs try et catch permettent de gérer les erreurs qui peuvent survenir. 
+// la fonction postWork() sert à envoyer des données (titre, image, catégorie) à un serveur via une requête POST pour ajouter un nouveau projet.
 // La fonction newImage permet d'envoyer une requête HTTP POST à une API afin d'ajouter une nouvelle image dans la gestion de projets.
 // La fonction async permet d'utiliser l'opération await (permet d'attendre que  que certaines promesses soient résolues avant de continuer l'exécution du code.)
 // Un objet FormData est créé, ce qui permet d'envoyer des données (title, img, category) dans une requête HTTP.
@@ -72,7 +73,7 @@ async function displayProjetModal() {
         div.appendChild(image)
     })
 }
-
+// cette fonction valide que tous les champs d'entrée du formulaire sont remplis avant d'activer le bouton de soumission
 function validateForm() {
     form.addEventListener('input', function () {
         const inputs = form.querySelectorAll('input');
@@ -104,7 +105,7 @@ function openModal(modal) {
     });
 }
 
-//creer l'image dans la seconde modale
+//creer l'image dans la seconde modale. URL.createObjectURL (file) crée un lien temporaire pour l'image.
 function createImage() {
     inputFile.addEventListener("change", function (event) {
         const file = event.target.files[0];
@@ -123,7 +124,7 @@ function createImage() {
         }
     });
 }
-
+// cette fonction permet d'insérer dynamiquement des catégories dans un élément <select>
 async function insertCategoryToSelectInput() {
     const category = await getCategories();
     category.forEach(cat => {
@@ -141,12 +142,12 @@ function closeModal(modal) {
     modal.classList.add('hidden')
     modal.setAttribute('aria-hidden', 'true');
 
-    // buttonLabel.classList.remove("button");
     containerImg.innerHTML = ' <i class="fa-regular fa-image" id="label-img"></i>';
     if (!buttonLabel.classList.contains("button")) {
         buttonLabel.classList.add("button");
         buttonLabel.textContent = "+ Ajouter photo";
     }
+    // réinitialise le champ de texte #title-rectangle à une chaine vide et rend le texte visible à nouveau
     document.querySelector("#title-rectangle").value = '';
     textModal2.style.display = 'block';
 }
@@ -177,6 +178,7 @@ async function initModal() {
    
     // Vérification et gestion du bouton de déconnexion (#logout)
     // Suppression du token et redirection de l'utilisateur vers la page de connexion
+    // la fonction initModal initialise différents comportements dans les modales au chargement de la page
     document.querySelector('#logout').addEventListener('click', () => {
         localStorage.removeItem('token')
         window.location.href = "./login.html"
