@@ -1,8 +1,8 @@
 const modalDelete = document.getElementById('modal1');
 const modalGallery = document.querySelector('#modal-project-gallery');
-const modalAdd = document.querySelector('#modal2')
-const form = document.getElementById('form-modal2')
-const submitter = document.querySelector("input[value=submit]")
+const modalAdd = document.querySelector('#modal2');
+const form = document.querySelector('.form-modal2');
+const submitter = document.querySelector("input[value=submit]");
 const containerImg = document.getElementById("container-img");
 const textModal2 = document.querySelector(".text-modal2");
 const btnModalOne = document.querySelector('#modal1-btn')
@@ -73,7 +73,8 @@ async function displayProjetModal() {
         div.appendChild(image)
     })
 }
-// cette fonction valide que tous les champs d'entrée du formulaire sont remplis avant d'activer le bouton de soumission
+// cette fonction valide que tous les champs d'entrée du formulaire sont remplis 
+// avant d'activer le bouton de soumission
 function validateForm() {
     form.addEventListener('input', function () {
         const inputs = form.querySelectorAll('input');
@@ -139,9 +140,9 @@ async function insertCategoryToSelectInput() {
 
 // la fonction closeModal(modal) sert à fermer la modale en la cachant visuellement 
 function closeModal(modal) {
-    modal.classList.add('hidden')
-    modal.setAttribute('aria-hidden', 'true');
-
+        modal.classList.add('hidden')
+        modal.setAttribute('aria-hidden', 'true');
+   
     containerImg.innerHTML = ' <i class="fa-regular fa-image" id="label-img"></i>';
     if (!buttonLabel.classList.contains("button")) {
         buttonLabel.classList.add("button");
@@ -175,7 +176,7 @@ async function deleteImage(imageId, element) {
 }
 
 async function initModal() {
-   
+
     // Vérification et gestion du bouton de déconnexion (#logout)
     // Suppression du token et redirection de l'utilisateur vers la page de connexion
     // la fonction initModal initialise différents comportements dans les modales au chargement de la page
@@ -212,7 +213,7 @@ async function initModal() {
         closeModal(modalDelete)
         openModal(modalAdd)
     })
-
+  
     closeModalOne.addEventListener('click', (e) => {
         closeModal(modalDelete)
     })
@@ -223,6 +224,16 @@ async function initModal() {
         closeModal(modalAdd)
         openModal(modalDelete)
     })
+
+    window.addEventListener('click', (e) => {
+        if (e.target === modalDelete) {
+            closeModal(modalDelete)
+        }
+        if (e.target === modalAdd) {
+            closeModal(modalAdd)
+        }
+    })
+  
 }
 
 document.addEventListener('DOMContentLoaded', initModal)

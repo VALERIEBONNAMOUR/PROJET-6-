@@ -14,13 +14,14 @@ async function fetchProjects() {
     return data
 }
 
-// la fonction displayProjects affiche les projets dans la galerie principale (pour chaque projet elle va créer un élément figure qui contiendra une image et une légende)
+// la fonction displayProjects affiche les projets dans la galerie principale 
+// (pour chaque projet elle va créer un élément figure qui contiendra une image et une légende)
 
 async function displayProjects(projects = null) {
     if (projects == null) {
         projects = await fetchProjects()
     }
-    
+
     gallery.innerHTML = '';
     projects.forEach(project => {
         const figure = document.createElement('figure');
@@ -62,7 +63,7 @@ async function createFilters() {
     try {
         const projects = await fetchProjects()
         const categories = await getCategories()
-// création du filtre tous
+        // création du filtre tous
         const divall = document.createElement("div")
         divall.classList.add('espacefiltre');
         const btn = document.createElement("a");
@@ -73,7 +74,7 @@ async function createFilters() {
         btn.addEventListener("click", () => { filterByCategory("tous", projects) })
         divall.appendChild(btn);
         filtreContainer.appendChild(divall);
-// création des filtres pour chaques catégories
+        // création des filtres pour chaques catégories
         categories.forEach(category => {
             const div = document.createElement('div');
             div.classList.add('espacefiltre');
@@ -104,17 +105,20 @@ async function createFilters() {
 // la fonction filterByCategory permet de filtrer les projets par catégorie
 function filterByCategory(categoryId, projects) {
     if (categoryId === "tous") {
-        return projects;
+        displayProjects(projects);
     }
-// projects.filter(...) est utilisé pour créer un nouveau tableau contenant 
-// uniquement les projets qui ont une categoryId
+    else{
+   // projects.filter(...) est utilisé pour créer un nouveau tableau contenant 
+    // uniquement les projets qui ont une categoryId
     displayProjects(projects.filter(item => item.categoryId === categoryId));
+    }
+ 
 }
 
 // la fonction init() initialise diverses actions (gérer des images, avec des modales, 
 // des filtres, des événements sur des formulaires)
 async function init() {
-   
+
     // Création des filtres
     if (filtreContainer) {
         await createFilters();
