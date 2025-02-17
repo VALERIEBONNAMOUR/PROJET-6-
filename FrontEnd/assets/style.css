@@ -259,7 +259,6 @@ nav li a:hover,
 	color: white;
 }
 
-
 .gallery {
 	width: 100%;
 	display: grid;
@@ -355,6 +354,7 @@ label#mdpo {
 		justify-content: center;
 		align-items: center;
 }
+
 /* création du bouton modifier */
 #edit-button {
 	display: flex;
@@ -375,7 +375,6 @@ a {
 }
 
 /* création de la modale 1*/
-
 
 .modal-container {
 	background-color: white;
@@ -501,7 +500,6 @@ i.fa-solid.fa-arrow-left {
 	align-items: center;
 }
 
-
 i.fa-regular.fa-image {
 	font-size: 70px;
 	color: rgba(185, 197, 204, 1);
@@ -541,7 +539,6 @@ p.text-modal2 {
 }
 
 h3 {
-	
 	margin-top: 10px;
 	font-weight: 500;
 }

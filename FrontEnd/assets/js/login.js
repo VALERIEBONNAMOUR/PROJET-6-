@@ -1,6 +1,10 @@
 const loginUrl = 'http://localhost:5678/api/users/login';
 const loginForm = document.getElementById('login-form');
 
+// la méthode addEventListener permet d'ajouter un écouteur d'évènement sur l'évènement (submit) du formulaire
+// les valeurs (email et password) seront envoyées à l'API pour connexion
+// ensuite on envoie une requête HTTP de type POST à l'API en utilisant la méthode fetch
+
 loginForm.addEventListener('submit', async (event) => {
     event.preventDefault();
 
