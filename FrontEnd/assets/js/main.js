@@ -70,7 +70,7 @@ async function createFilters() {
         btn.classList.add("selected")
         btn.href = "#";
         btn.classList.add('filtre-link');
-        btn.textContent = "tous";
+        btn.textContent = "Tous";
         btn.addEventListener("click", () => { filterByCategory("tous", projects) })
         divall.appendChild(btn);
         filtreContainer.appendChild(divall);
